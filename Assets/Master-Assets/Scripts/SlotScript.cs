@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UIElements;
 
 
-
 [RequireComponent(typeof(Collider))]
 public class SlotScript : MonoBehaviour
 {
@@ -12,11 +11,22 @@ public class SlotScript : MonoBehaviour
     private bool readyforanimation;
     private bool uiPresent;
 
+
     public Animator animator;
     private Collider col;
     private UiSettings uisettings;
     public List<SleutelCollectible> sleutel_collectibles;
     private SleutelCollectible[] sleutel_collectibles_full;
+
+
+    [Header("Gizmo Settings")]
+    [SerializeField, HideInInspector] public Color gizmoColor = Color.yellow;
+    [SerializeField, HideInInspector] public float gizmoSize = 0.5f;
+    [SerializeField, HideInInspector] public float iconAlpha = 0.5f;
+    [SerializeField, HideInInspector] public float iconSize = 0.5f;
+    [Range(0f, 1f), HideInInspector] public float emptyWarningAlpha = 0.35f;
+    [SerializeField, HideInInspector] public float emptyWarningIconSize = 40f;
+    [SerializeField, HideInInspector] public float emptyWarningHeight = 1.6f;
 
     void Awake()
     {
@@ -58,7 +68,6 @@ public class SlotScript : MonoBehaviour
         }
         else
         {
-            uisettings.SetupKeys(sleutel_collectibles.Count);
             uiPresent = true;
         }
     }
@@ -70,9 +79,12 @@ public class SlotScript : MonoBehaviour
             if(sleutel == sleutel_collectibles[i])
             {
                 Debug.Log("sleutel nummer" + sleutel_collectibles[i] + "is gevonden");
-                uisettings.AddKey();
                 sleutel_collectibles.Remove(sleutel_collectibles[i]);
                 CheckSlotList();
+                if(uiPresent)
+                {
+                    uisettings.AddKey();
+                }
             }
         }
     }

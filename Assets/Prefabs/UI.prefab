@@ -84,7 +84,6 @@ GameObject:
   - component: {fileID: 2376173918395836180}
   - component: {fileID: 6733607360345197676}
   - component: {fileID: 4372906030221532891}
-  - component: {fileID: 7934908445082121011}
   m_Layer: 5
   m_Name: keyholder
   m_TagString: Untagged
@@ -146,19 +145,6 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
---- !u!114 &7934908445082121011
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2635851700010586783}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55a86590901d6854c8a1fcd81855f141, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::KeySlot
-  filledsprite: {fileID: 0}
 --- !u!1 &4728340389839660850
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,3 +404,6 @@ MonoBehaviour:
   keyslotobject: {fileID: 2971801814607916633, guid: a299af5ef7fae4b40b9a19eaaf73645e,
     type: 3}
   keyslotparent: {fileID: 2635851700010586783}
+  currentkeyslot: 0
+  slotScripts: []
+  keyAmount: 0

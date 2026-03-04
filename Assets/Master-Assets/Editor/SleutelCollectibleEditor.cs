@@ -1,11 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 using UnityEditor;
-using UnityEngine;
 
-[CustomEditor(typeof(Collectible))]
-public class CollectibleEditor : Editor
+[CustomEditor(typeof(SleutelCollectible))]
+public class SleutelCollectibleEditor : Editor
 {
+    private Texture2D iconTexture;
+
     bool showAdvanced = false;
     bool showMocement = false;
     bool clicked;
@@ -16,8 +16,10 @@ public class CollectibleEditor : Editor
     SerializedProperty amplitude;
     SerializedProperty frequency;
 
-    void OnEnable()
+
+    private void OnEnable()
     {
+        iconTexture = EditorGUIUtility.IconContent("console.warnicon").image as Texture2D;
         speedProp = serializedObject.FindProperty("speed");
         xaxis = serializedObject.FindProperty("xaxis");
         yaxis = serializedObject.FindProperty("yaxis");
@@ -28,25 +30,29 @@ public class CollectibleEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        Collectible collectible = (Collectible)target;
-        serializedObject.Update();
+        SleutelCollectible script = (SleutelCollectible)target;
+        EditorGUILayout.HelpBox("Dit is een sleutelscript. Je moet het verwijzen aan een slotscript om het ook iets te laten doen", MessageType.Info);
 
+        EditorGUI.BeginChangeCheck();
 
-        if (GUILayout.Button("uitleg"))
+        Collider newCollider = (Collider)EditorGUILayout.ObjectField("Trigger Collider",script.col,typeof(Collider),true);
+
+        if (EditorGUI.EndChangeCheck())
         {
-            if (clicked)
-                clicked = false;
-            else
-                clicked = true;
+            Undo.RecordObject(script, "col");
+            script.col = newCollider;
+            EditorUtility.SetDirty(script);
         }
-        
-        if(collectible.GetComponent<Collider>() == null)
-            EditorGUILayout.HelpBox("Je moet een collider toevoegen om dit te laten werken", MessageType.Info);
 
-        if (clicked)
+        if (script.col == null)
         {
-            EditorGUILayout.HelpBox("Dit script bestuurt het opraapbare object. \nWanneer de speler binnen de collider loopt, dan zal dit script een particle effect afspelen en het object verwijderen. \nJe kunt de collectible laten draaien met de volgende rotatie knoppen en de snelheid", MessageType.Info);
+            EditorGUILayout.HelpBox("Er is geen collider component gevonden op dit object. Voeg een collider toe om dit script te laten werken", MessageType.Error);
         }
+        else if(script.col.isTrigger == false)
+        {
+            EditorGUILayout.HelpBox("De collider van dit object moet worden ingesteld als een trigger. Vink 'isTrigger' aan in de collider instellingen", MessageType.Error);
+        }
+
 
         // Toggle knop
         if (GUILayout.Button("Collectible Draaien"))
@@ -73,7 +79,6 @@ public class CollectibleEditor : Editor
             amplitude.floatValue = EditorGUILayout.Slider("Amplitude", amplitude.floatValue, 0.1f, 2f);
             frequency.floatValue = EditorGUILayout.Slider("Frequentie", frequency.floatValue, 0.1f, 5f);
         }
-
         serializedObject.ApplyModifiedProperties();
     }
 }

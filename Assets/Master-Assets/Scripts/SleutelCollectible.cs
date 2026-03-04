@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
-
+using UnityEditor;
+using System;
 
 [RequireComponent(typeof(Collider))]
 
@@ -11,7 +11,7 @@ public class SleutelCollectible : MonoBehaviour
 {
     [HideInInspector]
     public SlotScript slotscript;
-    private Collider col;
+    public Collider col;
     private float smoothTime = 0.8f;
     private float distanceThreshold = 1;
     private Vector3 velocity = Vector3.zero;
@@ -22,11 +22,30 @@ public class SleutelCollectible : MonoBehaviour
     [HideInInspector]
     public bool unlocked = false;
     private bool connected = false;
-    private float amplitude = 0.2f;
-    private float frequency = 0f;
-    private float speed = 40;
+
+
+    [Header("Gizmo Settings")]
+    [SerializeField, HideInInspector] public Color gizmoColor = Color.yellow;
+    [SerializeField, HideInInspector] public float gizmoSize = 0.5f;
+    [Header("State (read-only in Inspector)")]
+    [SerializeField, HideInInspector] public bool IsCollected = false;
+    [SerializeField, HideInInspector] private SlotScript currentSlot = null;
+    [Header("Icon Settings")]
+    [Range(0f, 1f), HideInInspector] public float iconAlpha = 0.4f;
+    [Range(0f, 1f), HideInInspector] public float iconSize = 40f;
+
+    private float xas;
+    private float yas;
+    private float zas;
+    [SerializeField] private float speed = 40f;
+    [SerializeField] private bool xaxis = false;
+    [SerializeField] private bool yaxis = false;
+    [SerializeField] private bool zaxis = false;
+    public float amplitude = 0.2f;
+    public float frequency = 0.7f;
     Vector3 posOffset = new Vector3();
     Vector3 tempPos = new Vector3();
+
 
     private void Awake()
     {
@@ -46,7 +65,22 @@ public class SleutelCollectible : MonoBehaviour
     {
         if (!connected)
         {
-            transform.Rotate(new Vector3(1, 0, 1) * speed * Time.deltaTime);
+            if (xaxis)
+                xas = 1;
+            else
+                xas = 0;
+
+            if (yaxis)
+                yas = 1;
+            else
+                yas = 0;
+
+            if (zaxis)
+                zas = 1;
+            else
+                zas = 0;
+
+            transform.Rotate(new Vector3(xas, yas, zas) * speed * Time.deltaTime);
             floating();
         }
     }
@@ -103,3 +137,5 @@ public class SleutelCollectible : MonoBehaviour
         }
     }
 }
+
+

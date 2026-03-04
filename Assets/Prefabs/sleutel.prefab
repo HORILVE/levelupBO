@@ -26,17 +26,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 5e3af69ba86289644a4fae35c60d2ed3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.909891
+      value: 7.0900507
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e3af69ba86289644a4fae35c60d2ed3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.54
+      value: -0.08
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e3af69ba86289644a4fae35c60d2ed3,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.266549
+      value: -11.935195
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5e3af69ba86289644a4fae35c60d2ed3,
         type: 3}
@@ -136,4 +136,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotscript: {fileID: 0}
+  col: {fileID: 7402349277501059699}
   unlocked: 0
+  gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  gizmoSize: 2.13
+  IsCollected: 0
+  currentSlot: {fileID: 0}
+  iconAlpha: 0.271
+  iconSize: 30
+  speed: 40
+  xaxis: 0
+  yaxis: 0
+  zaxis: 0
+  amplitude: 0.2
+  frequency: 2

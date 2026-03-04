@@ -6,7 +6,10 @@ using UnityEngine;
 public class Collectible : MonoBehaviour
 {
     private AudioSource audiosource;
-    private CoinCollector coincollector;
+
+
+
+
     private float xas;
     private float yas;
     private float zas;
@@ -25,8 +28,7 @@ public class Collectible : MonoBehaviour
 
     void Start()
     {
-        coincollector = FindFirstObjectByType<CoinCollector>();
-        particlesobject = FindFirstObjectByType<ParticleSystem>();
+        particlesobject = GetComponentInChildren<ParticleSystem>();
         audiosource = GetComponentInChildren<AudioSource>();  
         if (particlesobject == null)
         {
